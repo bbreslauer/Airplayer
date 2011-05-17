@@ -9,7 +9,7 @@ AIRPLAYER_PORT = 6002
 Set your media backend.
 Supported media backends are XBMC, VLC, Plex and Boxee.
 """
-MEDIA_BACKEND = 'XBMC'
+MEDIA_BACKEND = 'VLC'
 
 """
 Default ports:
@@ -45,4 +45,4 @@ AIRPLAY_HOSTNAME = None
 """
 Debug mode, set to False to disable debug logging.
 """
-DEBUG = False
+DEBUG = True
