@@ -28,6 +28,14 @@ class XBMCMediaBackend(BaseMediaBackend):
         self._jsonrpc = jsonrpclib.Server(self._jsonrpc_connection_string())
         self._TMP_DIR = tempfile.mkdtemp()
         
+        """
+        Make sure the folder is world readable, since XBMC might be running as a
+        different user then Airplayer.
+        
+        As pointed out at https://github.com/PascalW/Airplayer/issues#issue/9
+        """
+        os.chmod(self._TMP_DIR, 0755)
+        
         self.log.debug('TEMP DIR: %s', self._TMP_DIR)
     
     def _jsonrpc_connection_string(self):
@@ -156,6 +164,14 @@ class XBMCMediaBackend(BaseMediaBackend):
         Notify the user that Airplayer has started.
         """
         self._send_notification('Airplayer', 'Airplayer started')
+        
+    def is_playing(self):
+        response, error = self.get_player_state('videoplayer')
+        
+        if error:
+            return False
+            
+        return not response['paused']
     
     def get_player_state(self, player):
         """

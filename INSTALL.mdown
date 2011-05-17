@@ -3,7 +3,7 @@ General requirements
 
 To run airplayer, you'll need:
 
-* Python (>= 2.5)
+* Python (>= 2.6)
 * Pip
 * A compatible DNS-SD library (such as Avahi), on OSX this is installed by default
 
@@ -16,7 +16,7 @@ Linux
 On Linux you'll have to install a compatible DNS-SD library.
 For Ubuntu you should install the following package:
     
-    apt-get install libavahi-compat-libdnssd1
+    apt-get install libavahi-compat-libdnssd1 python-setuptools python-pip python-dev
 
 On other Linux distributions you'll have to install a similar package.
     
@@ -41,8 +41,8 @@ Make sure all requirements are met (see above) and execute the following command
 This will install the required python packages airplayer depends on. Note that, depending on your system
 configuration you might need to execute this command with sudo rights.
 
-Running
-=======
+Running Airplayer
+=================
 
 Edit settings.py to reflect your setup. For help, read the comments in settings.py.
 
@@ -50,15 +50,15 @@ Airplayer can be run in the foreground in your terminal and in the background as
 It is advised to first try to run airplayer in your terminal before trying to run it in the background,
 as it will be easier to spot (configuration) issues when running in the foreground.
 
-Foreground
-----------
+Running in the foreground
+-------------------------
 
 To run airplayer in the foreground execute:
 
     python airplayer.py
     
-Background
-----------
+Running in the background
+-------------------------
 
 There are scripts included to make Airplayer run in the background on Ubuntu and Mac OS X.
 By installing this scripts, Airplayer will also start when your computer boots.
@@ -82,13 +82,18 @@ There's an launchd script included in scripts/macosx/ to make airplayer run in t
 as a LaunchAgent.  
 Edit the `path/to/airplayer.py` string to match where you've put airplayer.py and
 make sure airplayer.py is executable by running `chmod +x airplayer.py`.  
-Then, place the launchd script in /Users/YOUR_USERNAME_/Library/LaunchAgents/.
+Then, place the launchd script in /Users/YOUR_USERNAME/Library/LaunchAgents/.
+
+Make sure file permissions are set correctly by executing:
+    
+    chmod 644 /Users/YOUR_USERNAME/Library/LaunchAgents/org.pwiddershoven.airplayer.plist
+    chown YOUR_USERNAME:Staff /Users/YOUR_USERNAME/Library/LaunchAgents/org.pwiddershoven.airplayer.plist
+
 Now activate the launch daemon by executing:
 
-    launchctl load -w /Users/YOUR_USERNAME_/Library/LaunchAgents/org.pwiddershoven.airplayer.plist
+    launchctl load -w /Users/YOUR_USERNAME/Library/LaunchAgents/org.pwiddershoven.airplayer.plist
 
-You can
-now start and stop airplayer by issuing the following command:
+You can now start and stop airplayer by issuing the following command:
 
     launchctl start|stop org.pwiddershoven.airplayer
 
@@ -97,6 +102,6 @@ Airplayer will also automatically start when you login. Logs are stored in
 
 ### Windows
 
-This feauture is currently not supported on Windows. I'm not a Windows user myself, so I have no idea
-what's required to make a python script run as a Windows Service or something. If someone is interested
-in tinkering with this and writing some instructions, let me know.
+See [this guide](http://pascalw.github.com/Airplayer/airplayer-windows-service.html), contributed by
+[smaccona](https://github.com/smaccona), to install Airplayer
+as a Windows Service and making it automatically start at boot.
